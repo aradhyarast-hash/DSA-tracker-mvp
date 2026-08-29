@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DSA Tracker | Pro Analytics Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">⚡</div>
+        <div class="brand-text">
+          <h2>DSA TRACKER</h2>
+          <span>Performance Hub</span>
+        </div>
+      </div>
+
+      <!-- Platforms Navigation -->
+      <div class="nav-section">
+        <span class="nav-label">PLATFORMS</span>
+        <nav class="platform-nav">
+          <button class="nav-item active" onclick="switchPlatform('leetcode', this)">
+            <span class="icon">🟡</span> LeetCode
+          </button>
+          <button class="nav-item" onclick="switchPlatform('codeforces', this)">
+            <span class="icon">🔴</span> Codeforces
+          </button>
+          <button class="nav-item" onclick="switchPlatform('codechef', this)">
+            <span class="icon">🟤</span> CodeChef
+          </button>
+          <button class="nav-item" onclick="switchPlatform('gfg', this)">
+            <span class="icon">🟢</span> GeeksforGeeks
+          </button>
+        </nav>
+
+        <button class="btn-add-platform" onclick="openAddPlatformModal()">
+          <span>+</span> Connect Platform URL
+        </button>
+      </div>
+
+      <!-- AI Assistant Tab -->
+      <div class="nav-section">
+        <span class="nav-label">INTELLIGENCE</span>
+        <button class="nav-item ai-tab" onclick="openAiChatbot()">
+          <span class="icon">✨</span> AI Roadmap & Doubts
+        </button>
+      </div>
+
+      <!-- Bottom User Profile & Logout -->
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="avatar" id="user-avatar-initials">AR</div>
+          <div class="user-info">
+            <p class="user-name" id="user-display-name">Aradhya Rastogi</p>
+            <span class="user-handle" id="user-display-handle">@active_session</span>
+          </div>
+          <button class="btn-logout" title="Log Out" onclick="logoutUser()">🚪</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <header class="top-header">
+        <div class="platform-meta">
+          <h1 id="current-platform-title">LeetCode Dashboard</h1>
+          <p>Real-time telemetry and algorithmic progress sync</p>
+        </div>
+        <div class="sync-bar">
+          <input type="text" id="platform-handle-input" placeholder="Enter LeetCode handle..." />
+          <button id="sync-btn" onclick="syncCurrentPlatform()">Sync Profile</button>
+        </div>
+      </header>
+
+      <!-- ANALYTICS VIEW -->
+      <div id="analytics-view" class="view-panel active">
+        <section class="stats-row">
+          <div class="metric-card today-card">
+            <span class="card-label">TODAY SOLVED</span>
+            <div class="metric-val" id="today-solved-val">--</div>
+            <span class="subtext text-emerald" id="today-subtext">Live Daily Sync</span>
+          </div>
+          <div class="metric-card">
+            <span class="card-label">TOTAL SOLVED</span>
+            <div class="metric-val" id="total-solved-val">--</div>
+            <span class="subtext" id="global-rank-val">Global Rank: --</span>
+          </div>
+          <div class="metric-card difficulty-card">
+            <div class="diff-split">
+              <div>
+                <span class="diff-title text-easy">Easy</span>
+                <p id="easy-val">--</p>
+              </div>
+              <div>
+                <span class="diff-title text-med">Medium</span>
+                <p id="med-val">--</p>
+              </div>
+              <div>
+                <span class="diff-title text-hard">Hard</span>
+                <p id="hard-val">--</p>
+              </div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <span class="card-label">CURRENT RATING</span>
+            <div class="metric-val text-cyan" id="rating-val">--</div>
+            <span class="subtext" id="max-rating-val">Max: --</span>
+          </div>
+        </section>
+
+        <!-- Two Column Insights -->
+        <div class="analytics-grid">
+          <div class="dashboard-section">
+            <div class="section-head">
+              <h3>Topic-wise Proficiency</h3>
+            </div>
+            <div class="topic-tags" id="topic-tags-container">
+              <span class="tag">Sync profile to load topics</span>
+            </div>
+          </div>
+
+          <div class="dashboard-section">
+            <div class="section-head">
+              <h3>Earned Badges</h3>
+            </div>
+            <div class="badge-grid" id="badge-container">
+              <div class="badge-item">
+                <span class="badge-icon">🛡️</span>
+                <div>
+                  <strong>No Badges Synced</strong>
+                  <p>Sync to load</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upcoming Contests Feed -->
+        <section class="dashboard-section">
+          <div class="section-head">
+            <h3>Upcoming Contests Schedule</h3>
+          </div>
+          <div class="contest-list" id="contest-list-container"></div>
+        </section>
+      </div>
+
+      <!-- AI CHATBOT VIEW -->
+      <div id="ai-chat-view" class="view-panel" style="display: none;">
+        <div class="chat-container">
+          <div class="chat-header">
+            <h3>AI DSA Mentor & Roadmap Navigator</h3>
+            <p>Ask for code intuition, optimal roadmaps, or time complexity breakdowns.</p>
+          </div>
+          <div class="chat-messages" id="chat-messages">
+            <div class="chat-msg ai">
+              Hello! I am your DSA Co-pilot. Ask me for intuitive explanations on DP, Graphs, or give me a problem name to break down!
+            </div>
+          </div>
+          <div class="chat-input-bar">
+            <input type="text" id="chat-input" placeholder="e.g. Explain 0/1 Knapsack intuition..." onkeypress="handleChatEnter(event)">
+            <button onclick="sendChatMessage()">Send</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
