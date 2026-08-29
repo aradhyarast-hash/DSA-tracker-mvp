@@ -1,7 +1,7 @@
 let activePlatform = 'overview';
-const API_BASE = "http://127.0.0.1:8000/api/fetch-stats";
-const CONTESTS_API = "http://127.0.0.1:8000/api/upcoming-contests";
-const AI_CHAT_API = "http://127.0.0.1:8000/api/ai-chat";
+const API_BASE = "https://dsa-tracker-mvp.onrender.com/api/fetch-stats";
+const CONTESTS_API = "https://dsa-tracker-mvp.onrender.com/api/upcoming-contests";
+const AI_CHAT_API = "https://dsa-tracker-mvp.onrender.com/api/ai-chat";
 
 const ALL_PLATFORMS = ['leetcode', 'codeforces', 'codechef', 'gfg'];
 
